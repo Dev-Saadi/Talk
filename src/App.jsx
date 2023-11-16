@@ -7,15 +7,13 @@ import {
 import './App.css'
 import Registration from "./Pages/Registration";
 import Login from "./Pages/Login";
-import firebaseConfig from "../firebaseconfig";
+import firebaseConfig from "../firebaseConfig";
 import { ToastContainer} from 'react-toastify';
 import Home from "./Pages/Home";
 import Message from "./Pages/Message";
-
 import Profile from "./Pages/Profile";
 import RootLayout from "./Components/RootLayout";
 import Connections from "./Pages/Connections";
-
 
 
 
@@ -68,6 +66,7 @@ const router = createBrowserRouter(
 
 
 function App() {
+  
   
 
   return (
