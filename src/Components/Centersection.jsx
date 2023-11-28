@@ -53,9 +53,15 @@ const Centersection = () => {
   const handleClose1 = () => setOpen1(false);
 
 
+  const [open2, setOpen2] = React.useState(false);
+  const handleOpen2 = () => setOpen2(true);
+  const handleClose2 = () => setOpen2(false);
+
+
   let [typevalue, settypevalue] = useState({
 
     Post: "",
+    
 
   })
 
@@ -72,16 +78,23 @@ const Centersection = () => {
     settypevalue({
         
         [e.target.name]: e.target.value
+        
       })
 
      
   }
+
+  
 
 
   let handlePost = ()=>{
     
     set(push(ref(db, 'PostbyUser/')), {
       userPost: typevalue.Post,
+      userID: userinfo.uid,
+      userName: userinfo.displayName
+      
+      
       
     });
 
@@ -133,6 +146,40 @@ const Centersection = () => {
       setOpen1(false)
       
   }
+
+  let EditAccessbtn = ()=>{
+    setOpen2(true)
+  }
+
+
+
+
+
+  // let [pendingList,setPendingList] = useState([])
+
+  // useEffect(()=>{
+
+  //   const connectionRequestRef = ref(db, 'connections');
+  //   onValue(connectionRequestRef, (snapshot) => {
+  //     let arr = []
+  //   snapshot.forEach(item=>{
+
+      
+        
+  //       arr.push({...item.val(), connectRequestId: item.key});
+      
+
+
+  //   })
+  //   setPendingList(arr)
+  //   });
+
+  // },[])
+
+
+
+
+
 
 
 
@@ -189,7 +236,7 @@ const Centersection = () => {
 
                   <div>
 
-                    <h5>{userinfo.displayName}</h5>
+                    <h5>{item.userName}</h5>
                     
                     <p>Designation</p>
 
@@ -205,10 +252,19 @@ const Centersection = () => {
                   </div>
 
                   <div className='Postbutton'>
+                  {item.userID == userinfo.uid
 
+                  &&
+                  
+                  <>
                   <Button className='Postbutton' onClick={()=>PostDelete(item.id)} color='error' variant="contained">Delete</Button>
                   
                   <Button  onClick={()=>postEditbtn(item)}  color='success' variant="contained">Edit</Button>
+
+                  <Button  onClick={()=>EditAccessbtn(item)}  color='success' variant="contained">Edit Access</Button>
+                  </>
+                  }
+                  
                   </div>
 
               </CardContent>
@@ -245,6 +301,7 @@ const Centersection = () => {
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             <p>Share a thought</p>
+            <br />
              <TextField name='Post' onChange={typingPost} value={typevalue.Post}  style={{width:"400px"}} variant='outlined' label="Whats on your mind ?"/>
             
           </Typography>
@@ -272,6 +329,7 @@ const Centersection = () => {
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             <p>Share a thought</p>
+            <br />
              <TextField name='Post' onChange={typingPost}  style={{width:"400px"}} variant='outlined' label="Whats on your mind ?"/>
             
           </Typography>
@@ -283,6 +341,41 @@ const Centersection = () => {
           </div>
         </Box>
       </Modal>
+
+
+
+      {/* Edit acess Modal */}
+
+      
+        
+      
+    {/* {pendingList.map(item=>(
+
+      <Modal
+        open={open2}
+        onClose={handleClose2}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            <p>Connection List</p>
+            <h4>{item.whoSendId == userinfo.uid ? item.whoRecieveName : item.whoSendName}</h4>
+            
+            
+          </Typography>
+          <br />
+          <div>
+
+          <Button  variant="contained">Give Access</Button>
+
+          </div>
+        </Box>
+      </Modal>
+    ))} */}
+      
+      
+      
 
     </div>
   )

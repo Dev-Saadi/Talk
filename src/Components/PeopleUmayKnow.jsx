@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Image from "../Components/Image"
 import bigT3 from "../assets/bigT3.png"
 import Button from '@mui/material/Button';
-import { getDatabase, ref, onValue, set, push } from "firebase/database";
+import { getDatabase, ref, onValue, set, push, remove } from "firebase/database";
 import { useSelector } from "react-redux";
 
 const PeopleUmayKnow = () => {
@@ -93,8 +93,12 @@ const PeopleUmayKnow = () => {
 
   },[])
 
-  let handleCancel = ()=>{
-    
+  let handleCancel = (item)=>{
+    remove(ref(db, 'connectRequest'), {
+     
+      whoRecieveName: item.username,
+      whoRecieveId: item.userId
+    });
   }
 
 
@@ -114,8 +118,6 @@ const PeopleUmayKnow = () => {
             {pendingList.includes(item.userId+userInfo.uid) || pendingList.includes(userInfo.uid+item.userId) 
             ? 
             <Button color='success' variant="contained">Pending</Button>
-            
-            // <Button color='success' variant="contained">Cancel</Button>
             : 
             connectList.includes(item.userId+userInfo.uid) || connectList.includes(userInfo.uid+item.userId) 
             ?
